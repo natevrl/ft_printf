@@ -15,5 +15,14 @@
 
 int ft_printf(const char *, ...)
 {
+   va_list va;
+   va_start(va, s);
 			
 }
+
+// Une fonction qui initialise un les valeurs du tableau
+// Dans printf = 
+// 			On boucle sur la string[i]
+// 			des que string[i] == %, cest qu'on a a faire a une variable
+// 			Evaluer le format de la variable rencontrer
+// Une fonction EVALUATE_FORMAT

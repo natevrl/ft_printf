@@ -34,55 +34,75 @@ X = va_arg(args, unsigned int)
 // 			Evaluer le format de la variable rencontrer
 // Une fonction EVALUATE_FORMAT
 	
-void	ft_putchar(char c)
+int	ft_putchar(char c)
 {
 	write(1, &c, 1);
+	return (1);
 }
 
-void	ft_putnbr(int nb)
-{
-	if (nb == -2147483648)
-	{
-		write(1, "-2147483648", 11);
-		return ;
-	}
-	if (nb < 0)
-	{
-		ft_putchar('-');
-		nb = -nb;
-	}
-	if (nb > 9)
-	{
-		ft_putnbr(nb / 10);
-		ft_putnbr(nb %= 10);
-	}
-	else
-	{
-		ft_putchar(nb + 48);
-	}
-}
-
-void	ft_putnbr_unsigned(int nb)
-{
-	if (nb > 9)
-	{
-		ft_putnbr(nb / 10);
-		ft_putnbr(nb %= 10);
-	}
-	else
-		ft_putchar(nb + 48);
-}
-
-void	ft_putstr(char *str)
+int	ft_putstr(char *str)
 {
 	int i;
 
 	i = -1;
 	while (str[++i])
 		ft_putchar(str[i]);
+	return (i);
 }
 
-void	ft_putnbr_hexa(long int nb)
+int	lenumber(int nbr)
+{
+	int	i;
+
+	if (nbr == 0)
+		return (1);
+	i = 0;
+	while (nbr)
+	{
+		nbr /= 10;
+		i++;
+	}
+	return (i);
+}
+
+int ft_putnbr(int nb)
+{
+	
+	if (nb == -2147483648)
+	{
+		write(1, "-2147483648", 11);
+		return (11);
+	}
+	if (nb < 0)
+	{
+		ft_putchar('-');
+		nb = -nb;
+	}
+	if (nb > 9)
+	{
+		ft_putnbr(nb / 10);
+		ft_putnbr(nb % 10);
+	}
+	else
+		ft_putchar(nb + 48);
+	return (lenumber(nb));
+}
+
+int	putnbr_unsigned(unsigned int nb)
+{
+	if (nb > 9)
+	{
+		putnbr_unsigned(nb / 10);
+		putnbr_unsigned(nb % 10);
+	}
+	else
+		ft_putchar(nb + 48);
+	return (lenumber(nb));
+}
+
+
+
+int	hexa_putnbr(long int nb)
 {
 	char *base;
 
@@ -94,54 +114,54 @@ void	ft_putnbr_hexa(long int nb)
 	}
 	if (nb > 15)
 	{
-		ft_putnbr_hexa(nb / 16);
-		ft_putnbr_hexa(nb %= 16);
+		hexa_putnbr(nb / 16);
+		hexa_putnbr(nb % 16);
 	}
 	else
 	{
 		ft_putchar(base[nb]);
 	}
+	return (lenumber(nb));
 }
 
-void	ft_putnbr_unsi(unsigned long long int nb)
+int	hexa_putnbr_unsigned(unsigned long long int nb)
 {
 	char *base;
-	int i;
-
-	i = 0;
+	
 	base = "0123456789abcdef";
 	if (nb > 15)
 	{
-		ft_putnbr_hexa(nb / 16);
-		ft_putnbr_hexa(nb % 16);
+		hexa_putnbr_unsigned(nb / 16);
+		hexa_putnbr_unsigned(nb % 16);
 	}
 	else
 		ft_putchar(base[nb]);
+	return (14);
 }
 
-void	find_format(char c, va_list *arg_ptr)
+int find_format(char c, va_list *arg_ptr)
 {
 	if (c == 'c')
-		ft_putchar(va_arg(*arg_ptr, int));
-	if (c == 's')
-		ft_putstr(va_arg(*arg_ptr, char *));
-	if (c == 'd')
-		ft_putnbr(va_arg(*arg_ptr, int));
-	if (c == 'i')
-		ft_putnbr(va_arg(*arg_ptr, int));
-	if (c == 'u')
-		ft_putnbr_unsigned((va_arg(*arg_ptr, int)));
-	if (c == 'p')
+		return ft_putchar(va_arg(*arg_ptr, int));
+	else if (c == 's')
+		return ft_putstr(va_arg(*arg_ptr, char *));
+	else if (c == 'i' || c == 'd')
+		return ft_putnbr(va_arg(*arg_ptr, int));
+	else if (c == 'u')
+		return putnbr_unsigned((va_arg(*arg_ptr, int)));
+	else if (c == 'p')
 	{
 		write(1, "0x", 2);
-		ft_putnbr_unsi(va_arg(*arg_ptr, unsigned long long int));
+		return hexa_putnbr_unsigned(va_arg(*arg_ptr, unsigned long long int));
 	}
-	if (c == 'x')
-		ft_putnbr_hexa(va_arg(*arg_ptr, unsigned long long int));
-	if (c == 'X')
-		ft_putchar((va_arg(*arg_ptr, int)));
-	if (c == '%')
-		ft_putchar('%');
+	else if (c == 'x')
+		return hexa_putnbr(va_arg(*arg_ptr, int));
+	else if (c == 'X')
+		return ft_putchar((va_arg(*arg_ptr, int)));
+	else if (c == '%')
+		return ft_putchar('%');
+	else
+		return (0);
 }
 
 int ft_printf(const char *str, ...)
@@ -150,14 +170,14 @@ int ft_printf(const char *str, ...)
 	int ret;
 	va_list arg_ptr;
 	
-	ret = 0;
+	ret = -2;
 	i = 0;
 	va_start(arg_ptr, str);
 	while(str[i])
    {
 	   if (str[i] == '%')
 	   {
-		   find_format(str[i + 1], &arg_ptr);;
+		   ret += find_format(str[i + 1], &arg_ptr);
 		   i++;
 	   }
 	   else
@@ -165,13 +185,15 @@ int ft_printf(const char *str, ...)
 	   i++;
    }
 	va_end(arg_ptr);
-	return (ret);		
+	return (ret + i);		
 }
+
+
 #include <stdio.h>
 int main()
 {
-	double i = -17.03;
-	printf("test 1 : %d\n", i);
-	ft_printf("test 1 : %p\n", &i);
+	unsigned long long int i = -111111111;
+	printf("%d\n", printf("1: %p >> ", &i));
+	ft_printf("%d\n", ft_printf("2: %p >> ", &i));
 	return(0);
 }

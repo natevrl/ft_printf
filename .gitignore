@@ -2,3 +2,4 @@ main.c
 *.out
 *.swp
 .DS_Store
+pft/

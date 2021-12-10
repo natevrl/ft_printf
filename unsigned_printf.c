@@ -1,5 +1,19 @@
 #include "ft_printf.h"
 
+int	lenumber(int nbr)
+{
+	int	i;
+
+	if (nbr == 0)
+		return (1);
+	i = 0;
+	while (nbr)
+	{
+		nbr /= 10;
+		i++;
+	}
+	return (i);
+}
 
 int ft_putnbr(int nb)
 {
@@ -27,6 +41,21 @@ int ft_putnbr(int nb)
 		ft_putchar(nb + 48);
 	return (len);
 
+}
+
+int	unsigned_lenumber(unsigned int nbr)
+{
+	int	i;
+
+	if (nbr == 0)
+		return (1);
+	i = 0;
+	while (nbr)
+	{
+		nbr /= 10;
+		i++;
+	}
+	return (i);
 }
 
 int	putnbr_unsigned(unsigned int nb)

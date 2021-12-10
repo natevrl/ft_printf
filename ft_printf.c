@@ -6,7 +6,7 @@
 /*   By: nbenhado <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/07 14:36:47 by nbenhado          #+#    #+#             */
-/*   Updated: 2021/12/08 22:28:42 by nbenhado         ###   ########.fr       */
+/*   Updated: 2021/12/10 14:55:27 by nbenhado         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,36 +35,6 @@ int	ft_putstr(char *str)
 	return (i);
 }
 
-int	lenumber(int nbr)
-{
-	int	i;
-
-	if (nbr == 0)
-		return (1);
-	i = 0;
-	while (nbr)
-	{
-		nbr /= 10;
-		i++;
-	}
-	return (i);
-}
-
-int	unsigned_lenumber(unsigned int nbr)
-{
-	int	i;
-
-	if (nbr == 0)
-		return (1);
-	i = 0;
-	while (nbr)
-	{
-		nbr /= 10;
-		i++;
-	}
-	return (i);
-}
-	
 int find_format(char c, va_list *arg_ptr)
 {
 	if (c == 'c')
@@ -111,8 +81,8 @@ int ft_printf(const char *str, ...)
 	return (ret);		
 }
 
-/*
-#include <stdio.h>
+
+/*#include <stdio.h>
 int main()
 {
 	unsigned int i = 0;

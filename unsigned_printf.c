@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   unsigned_printf.c                                  :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: nbenhado <marvin@42.fr>                    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2021/12/14 12:44:58 by nbenhado          #+#    #+#             */
+/*   Updated: 2021/12/14 12:45:46 by nbenhado         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "ft_printf.h"
 
 int	lenumber(int nbr)
@@ -15,10 +27,9 @@ int	lenumber(int nbr)
 	return (i);
 }
 
-int ft_putnbr(int nb)
+int	ft_putnbr(int nb)
 {
-	
-	int len;
+	int	len;
 
 	len = lenumber(nb);
 	if (nb == -2147483648)
@@ -40,7 +51,6 @@ int ft_putnbr(int nb)
 	else
 		ft_putchar(nb + 48);
 	return (len);
-
 }
 
 int	unsigned_lenumber(unsigned int nbr)
@@ -60,7 +70,7 @@ int	unsigned_lenumber(unsigned int nbr)
 
 int	putnbr_unsigned(unsigned int nb)
 {
-	int len;
+	int	len;
 
 	len = unsigned_lenumber(nb);
 	if (nb > 9)

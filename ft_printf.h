@@ -1,10 +1,22 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   ft_printf.h                                        :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: nbenhado <marvin@42.fr>                    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2021/12/14 12:45:58 by nbenhado          #+#    #+#             */
+/*   Updated: 2021/12/14 12:46:32 by nbenhado         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #ifndef FT_PRINTF_H
 # define FT_PRINTF_H
 
-#include <unistd.h>
-#include <stdarg.h>
-#include <stdio.h>
-#include <stdint.h>
+# include <unistd.h>
+# include <stdarg.h>
+# include <stdio.h>
+# include <stdint.h>
 
 int		ft_putchar(char c);
 int		ft_putstr(char *str);
